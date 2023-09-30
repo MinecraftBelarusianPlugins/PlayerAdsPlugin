@@ -2,3 +2,10 @@ name: PlayerAdsPlugin
 version: '${version}'
 main: by.siarhiejbahdaniec.playeradsplugin.PlayerAdsPlugin
 api-version: '1.20'
+description: Allows players who have permission to post promotional messages to the public chat
+commands:
+  ad:
+    description: Плагін дадае магчымасць гульцам рабіць рэкламныя паведамленні
+    usage: /ad
+    default: true
+    permission: player.ads
