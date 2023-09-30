@@ -1,0 +1,4 @@
+name: PlayerAdsPlugin
+version: '${version}'
+main: by.siarhiejbahdaniec.playeradsplugin.PlayerAdsPlugin
+api-version: '1.20'
