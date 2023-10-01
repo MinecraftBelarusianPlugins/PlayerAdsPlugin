@@ -24,9 +24,11 @@ public class AdCommandExecutor implements CommandExecutor {
                              @NotNull String label,
                              @NotNull String[] args) {
         if (sender instanceof Player) {
-            var playerName = sender.getName();
             var message = String.join(" ", args);
-            Bukkit.getServer().broadcastMessage(String.format("AD from %s: %s", playerName, message));
+            var prefix = configHolder.getString(ConfigKeys.adPrefix);
+            var postfix = configHolder.getString(ConfigKeys.adPostfix);
+            var formattedMessage = String.format("%s%s%s", prefix, message, postfix);
+            Bukkit.getServer().broadcastMessage(formattedMessage);
         } else {
             sender.sendMessage(configHolder.getString(ConfigKeys.Resources.commandOnlyForPlayers));
         }

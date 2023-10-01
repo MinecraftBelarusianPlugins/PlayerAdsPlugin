@@ -1,2 +1,5 @@
 resources:
   command-only-for-players: "Гэтая каманда толькі для гульцоў"
+
+ad-prefix: "***** "
+ad-postfix: " *****"
