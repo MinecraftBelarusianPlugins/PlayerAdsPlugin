@@ -21,17 +21,25 @@ public class LastAdTimeRepo {
     @NotNull
     private final Logger logger;
 
+    private final boolean saveImmediately;
+
     public LastAdTimeRepo(@NotNull File dir,
-                          @NotNull Logger logger) {
+                          @NotNull Logger logger,
+                          boolean saveImmediately) {
         file = new File(dir, filename);
         configuration = YamlConfiguration.loadConfiguration(file);
 
         this.logger = logger;
+        this.saveImmediately = saveImmediately;
     }
 
     public void setLastAdTime(@NotNull String username,
                               @NotNull Long time) {
         configuration.set(username, time);
+
+        if (saveImmediately) {
+            saveData();
+        }
     }
 
     @NotNull

@@ -5,6 +5,7 @@ ad-postfix: " *****"
 # sets the time threshold at which players can write ad messages
 # specified in seconds
 ad-threshold-per-player: 1800
+ad-threshold-save-file-immediately: false
 
 # localizable resources
 resources:

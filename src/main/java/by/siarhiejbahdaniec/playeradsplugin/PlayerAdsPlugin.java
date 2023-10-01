@@ -2,6 +2,7 @@ package by.siarhiejbahdaniec.playeradsplugin;
 
 import by.siarhiejbahdaniec.playeradsplugin.command.AdCommandExecutor;
 import by.siarhiejbahdaniec.playeradsplugin.config.ConfigHolder;
+import by.siarhiejbahdaniec.playeradsplugin.config.ConfigKeys;
 import by.siarhiejbahdaniec.playeradsplugin.repo.LastAdTimeRepo;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -18,7 +19,8 @@ public final class PlayerAdsPlugin extends JavaPlugin implements ConfigHolder {
     public void onEnable() {
         setupConfig();
 
-        lastAdTimeRepo = new LastAdTimeRepo(getDataFolder(), getLogger());
+        var saveImmediately = getConfig().getBoolean(ConfigKeys.adSaveFileImmediately, false);
+        lastAdTimeRepo = new LastAdTimeRepo(getDataFolder(), getLogger(), saveImmediately);
 
         var executor = new AdCommandExecutor(this, lastAdTimeRepo);
         Objects.requireNonNull(getCommand("ad")).setExecutor(executor);
