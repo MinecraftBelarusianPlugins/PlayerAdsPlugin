@@ -46,3 +46,9 @@ processResources {
         expand props
     }
 }
+
+tasks.register('cleanJar') {
+    dependsOn 'clean'
+    dependsOn 'jar'
+    tasks.findByName('jar').mustRunAfter 'clean'
+}
