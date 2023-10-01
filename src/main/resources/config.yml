@@ -9,6 +9,11 @@ ad-postfix: " *****"
 # Make it an empty string if not needed.
 ad-player-signature-format: " (%s)"
 
+# If true, then if there are "\n" symbols inside the message,
+# as well as prefix, postfix and signature,
+# the message will be divided into different lines by these symbols
+ad-use-multi-line: true
+
 # [LOGIC]
 # Sets the time threshold at which players can write ad messages.
 # Specified in seconds.

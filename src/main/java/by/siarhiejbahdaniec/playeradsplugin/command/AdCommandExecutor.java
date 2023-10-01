@@ -99,7 +99,13 @@ public class AdCommandExecutor implements CommandExecutor {
         var postfix = configHolder.getString(ConfigKeys.adPostfix);
         var signature = configHolder.getString(ConfigKeys.adPlayerSignatureFormat).formatted(playerName);
         var formattedMessage = String.join(ChatColor.RESET.toString(), prefix, message, signature, postfix);
-        var coloredMessage = ColorUtils.format(formattedMessage);
-        Bukkit.getServer().broadcastMessage(coloredMessage);
+        var coloredMessage = (ColorUtils.format(formattedMessage));
+        if (configHolder.getBoolean(ConfigKeys.adUseMultiLine)) {
+            for (var line: coloredMessage.split("\\\\n")) {
+                Bukkit.getServer().broadcastMessage(line);
+            }
+        } else {
+            Bukkit.getServer().broadcastMessage(coloredMessage);
+        }
     }
 }

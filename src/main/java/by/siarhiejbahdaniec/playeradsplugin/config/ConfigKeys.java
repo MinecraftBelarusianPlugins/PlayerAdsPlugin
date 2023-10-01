@@ -5,6 +5,7 @@ public class ConfigKeys {
     public static final String adPrefix = "ad-prefix";
     public static final String adPostfix = "ad-postfix";
     public static final String adPlayerSignatureFormat = "ad-player-signature-format";
+    public static final String adUseMultiLine = "ad-use-multi-line";
 
     public static final String adThresholdPerPlayer = "ad-threshold-per-player";
     public static final String adSaveFileImmediately = "ad-threshold-save-file-immediately";
