@@ -1,5 +1,7 @@
-resources:
-  command-only-for-players: "Гэтая каманда толькі для гульцоў"
-
+# ads display settings
 ad-prefix: "***** "
 ad-postfix: " *****"
+
+# localizable resources
+resources:
+  command-only-for-players: "Гэтая каманда толькі для гульцоў"

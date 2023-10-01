@@ -19,6 +19,7 @@ public final class PlayerAdsPlugin extends JavaPlugin implements ConfigHolder {
     private void setupConfig() {
         saveDefaultConfig();
         getConfig().options().copyDefaults(true);
+        saveConfig();
     }
 
     @NotNull
