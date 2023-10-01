@@ -10,6 +10,7 @@ public class ConfigKeys {
     public static final String adSaveFileImmediately = "ad-threshold-save-file-immediately";
     public static final String adMaxMessageLength = "ad-max-message-length";
     public static final String adMinMessageLength = "ad-min-message-length";
+    public static final String adUseLuckPermsPlaceholders = "ad-use-luck-perms-placeholders";
 
     public static class Resources {
         private static final String _prefix = "resources.";

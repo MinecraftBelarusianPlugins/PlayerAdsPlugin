@@ -27,6 +27,9 @@ ad-max-message-length: 255
 # If equal to the negative number (e.g. -1), then there are no size restrictions.
 ad-min-message-length: 25
 
+# Specifies whether prefixes and suffixes from LuckPerms should be used in player's signature
+ad-use-luck-perms-placeholders: true
+
 # [MESSAGES]
 resources:
   command-only-for-players: "§cГэтая каманда толькі для гульцоў"

@@ -76,13 +76,17 @@ public class AdCommandExecutor implements CommandExecutor {
 
     private String obtainPlayerName(Player player) {
         var playerName = player.getName();
-        var pluginManager = Bukkit.getServer().getPluginManager();
-        if (pluginManager.isPluginEnabled("LuckPerms")) {
-            var provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
-            if (provider != null) {
-                var api = provider.getProvider();
-                var metaData = api.getPlayerAdapter(Player.class).getMetaData(player);
-                return StringUtils.getOrEmpty(metaData.getPrefix()) + playerName + StringUtils.getOrEmpty(metaData.getSuffix());
+        if (configHolder.getBoolean(ConfigKeys.adUseLuckPermsPlaceholders)) {
+            var pluginManager = Bukkit.getServer().getPluginManager();
+            if (pluginManager.isPluginEnabled("LuckPerms")) {
+                var provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
+                if (provider != null) {
+                    var api = provider.getProvider();
+                    var metaData = api.getPlayerAdapter(Player.class).getMetaData(player);
+                    return StringUtils.getOrEmpty(metaData.getPrefix()) +
+                            playerName +
+                            StringUtils.getOrEmpty(metaData.getSuffix());
+                }
             }
         }
         return playerName;
