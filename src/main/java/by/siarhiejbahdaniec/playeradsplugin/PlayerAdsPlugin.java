@@ -52,8 +52,8 @@ public final class PlayerAdsPlugin extends JavaPlugin implements ConfigHolder {
     }
 
     @Override
-    public long getLong(String key) {
-        return getConfig().getLong(key);
+    public int getInt(String key) {
+        return getConfig().getInt(key);
     }
 
     @Override

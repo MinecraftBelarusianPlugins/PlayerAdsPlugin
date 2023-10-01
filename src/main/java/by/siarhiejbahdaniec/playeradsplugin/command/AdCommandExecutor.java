@@ -40,12 +40,18 @@ public class AdCommandExecutor implements CommandExecutor {
             var time = System.currentTimeMillis();
             var lastTimestamp = lastAdTimeRepo.getLastAdTime(playerName);
             var timeDifference = time - lastTimestamp;
-            long threshold = TimeUnit.SECONDS.toMillis(configHolder.getLong(ConfigKeys.adThresholdPerPlayer));
+            long threshold = TimeUnit.SECONDS.toMillis(configHolder.getInt(ConfigKeys.adThresholdPerPlayer));
 
             if (timeDifference > threshold) {
                 var message = String.join(" ", args);
-                postUserAd(message, playerName);
-                lastAdTimeRepo.setLastAdTime(playerName, time);
+                var maxLength = configHolder.getInt(ConfigKeys.adMaxMessageLength);
+                if (message.length() <= maxLength || maxLength < 0) {
+                    postUserAd(message, playerName);
+                    lastAdTimeRepo.setLastAdTime(playerName, time);
+                } else {
+                    var error = configHolder.getString(ConfigKeys.Resources.messageTooLarge).formatted(maxLength);
+                    sender.sendMessage(error);
+                }
             } else {
                 var timeLabel = simpleDateFormat.format(threshold - timeDifference);
                 var message = configHolder.getString(ConfigKeys.Resources.waitToUseCommand).formatted(timeLabel);

@@ -1,16 +1,17 @@
 # [VIEW]
-# the prefix that will be added to the message
+# The prefix that will be added to the message
 ad-prefix: "***** "
 
-# the postfix that will be added to the message
+# The postfix that will be added to the message
 ad-postfix: " *****"
 
-# make it an empty string if not needed
+# Player signature format. It will right before the postfix.
+# Make it an empty string if not needed.
 ad-player-signature-format: " (%s)"
 
 # [LOGIC]
-# sets the time threshold at which players can write ad messages
-# specified in seconds
+# Sets the time threshold at which players can write ad messages.
+# Specified in seconds.
 ad-threshold-per-player: 1800
 
 # The flag indicates whether the user's timestamps should be saved immediately.
@@ -18,7 +19,12 @@ ad-threshold-per-player: 1800
 # they are saved to a file when the plugin or server is turned off.
 ad-threshold-save-file-immediately: false
 
+# Maximum message length from the user (without prefix, postfix and suffix).
+# If equal to the negative number (e.g. -1), then there are no size restrictions.
+ad-max-message-length: 255
+
 # [MESSAGES]
 resources:
   command-only-for-players: "Гэтая каманда толькі для гульцоў"
   wait-to-use-command: "Вы нядаўна ўжо карысталіся гэтай камандай. Пачакайце яшчэ %s."
+  message-too-large: "Паведамленне занадта вялікае. Максімальны памер паведамлення: %d знакаў."
