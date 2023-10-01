@@ -6,7 +6,7 @@ ad-prefix: "***** "
 ad-postfix: " *****"
 
 # make it an empty string if not needed
-ad-player-signature-format: "(%s)"
+ad-player-signature-format: " (%s)"
 
 # [LOGIC]
 # sets the time threshold at which players can write ad messages

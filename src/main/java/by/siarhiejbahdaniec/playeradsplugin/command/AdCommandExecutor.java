@@ -44,7 +44,7 @@ public class AdCommandExecutor implements CommandExecutor {
 
             if (timeDifference > threshold) {
                 var message = String.join(" ", args);
-                postUserAd(message);
+                postUserAd(message, playerName);
                 lastAdTimeRepo.setLastAdTime(playerName, time);
             } else {
                 var timeLabel = simpleDateFormat.format(threshold - timeDifference);
@@ -57,10 +57,11 @@ public class AdCommandExecutor implements CommandExecutor {
         return true;
     }
 
-    private void postUserAd(String message) {
+    private void postUserAd(String message, String playerName) {
         var prefix = configHolder.getString(ConfigKeys.adPrefix);
         var postfix = configHolder.getString(ConfigKeys.adPostfix);
-        var formattedMessage = String.format("%s%s%s", prefix, message, postfix);
+        var signature = configHolder.getString(ConfigKeys.adPlayerSignatureFormat).formatted(playerName);
+        var formattedMessage = prefix + message + signature + postfix;
         Bukkit.getServer().broadcastMessage(formattedMessage);
     }
 }
