@@ -1,7 +1,8 @@
-package by.siarhiejbahdaniec.playeradsplugin;
+package by.siarhiejbahdaniec.playeradsplugin.command;
 
 import by.siarhiejbahdaniec.playeradsplugin.config.ConfigHolder;
 import by.siarhiejbahdaniec.playeradsplugin.config.ConfigKeys;
+import by.siarhiejbahdaniec.playeradsplugin.repo.LastAdTimeRepo;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -14,8 +15,13 @@ public class AdCommandExecutor implements CommandExecutor {
     @NotNull
     private final ConfigHolder configHolder;
 
-    public AdCommandExecutor(@NotNull ConfigHolder configHolder) {
+    @NotNull
+    private final LastAdTimeRepo lastAdTimeRepo;
+
+    public AdCommandExecutor(@NotNull ConfigHolder configHolder,
+                             @NotNull LastAdTimeRepo lastAdTimeRepo) {
         this.configHolder = configHolder;
+        this.lastAdTimeRepo = lastAdTimeRepo;
     }
 
     @Override
