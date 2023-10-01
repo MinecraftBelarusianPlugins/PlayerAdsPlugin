@@ -3,9 +3,11 @@ package by.siarhiejbahdaniec.playeradsplugin.command;
 import by.siarhiejbahdaniec.playeradsplugin.config.ConfigHolder;
 import by.siarhiejbahdaniec.playeradsplugin.config.ConfigKeys;
 import by.siarhiejbahdaniec.playeradsplugin.repo.LastAdTimeRepo;
+import by.siarhiejbahdaniec.playeradsplugin.utils.ColorUtils;
 import by.siarhiejbahdaniec.playeradsplugin.utils.StringUtils;
 import net.luckperms.api.LuckPerms;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -54,11 +56,11 @@ public class AdCommandExecutor implements CommandExecutor {
                 if (messageLength > maxLength && maxLength >= 0) {
                     var error = configHolder.getString(ConfigKeys.Resources.messageTooLarge)
                             .formatted(maxLength);
-                    sender.sendMessage(error);
+                    sender.sendMessage(ColorUtils.format(error));
                 } else if (minLength >= 0 && messageLength < minLength) {
                     var error = configHolder.getString(ConfigKeys.Resources.messageTooSmall)
                             .formatted(minLength);
-                    sender.sendMessage(error);
+                    sender.sendMessage(ColorUtils.format(error));
                 } else {
                     postUserAd(message, playerName);
                     lastAdTimeRepo.setLastAdTime(playerName, time);
@@ -66,10 +68,10 @@ public class AdCommandExecutor implements CommandExecutor {
             } else {
                 var timeLabel = simpleDateFormat.format(threshold - timeDifference);
                 var message = configHolder.getString(ConfigKeys.Resources.waitToUseCommand).formatted(timeLabel);
-                sender.sendMessage(message);
+                sender.sendMessage(ColorUtils.format(message));
             }
         } else {
-            sender.sendMessage(configHolder.getString(ConfigKeys.Resources.commandOnlyForPlayers));
+            sender.sendMessage(ColorUtils.format(configHolder.getString(ConfigKeys.Resources.commandOnlyForPlayers)));
         }
         return true;
     }
@@ -96,7 +98,8 @@ public class AdCommandExecutor implements CommandExecutor {
         var prefix = configHolder.getString(ConfigKeys.adPrefix);
         var postfix = configHolder.getString(ConfigKeys.adPostfix);
         var signature = configHolder.getString(ConfigKeys.adPlayerSignatureFormat).formatted(playerName);
-        var formattedMessage = prefix + message + signature + postfix;
-        Bukkit.getServer().broadcastMessage(formattedMessage);
+        var formattedMessage = String.join(ChatColor.RESET.toString(), prefix, message, signature, postfix);
+        var coloredMessage = ColorUtils.format(formattedMessage);
+        Bukkit.getServer().broadcastMessage(coloredMessage);
     }
 }
