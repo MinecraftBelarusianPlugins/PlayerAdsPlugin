@@ -10,3 +10,4 @@ ad-threshold-save-file-immediately: false
 # localizable resources
 resources:
   command-only-for-players: "Гэтая каманда толькі для гульцоў"
+  wait-to-use-command: "Вы нядаўна ўжо карысталіся гэтай камандай. Пачакайце яшчэ %s."

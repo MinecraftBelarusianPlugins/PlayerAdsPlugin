@@ -1,5 +1,7 @@
 package by.siarhiejbahdaniec.playeradsplugin.repo;
 
+import by.siarhiejbahdaniec.playeradsplugin.config.ConfigHolder;
+import by.siarhiejbahdaniec.playeradsplugin.config.ConfigKeys;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 
@@ -21,30 +23,31 @@ public class LastAdTimeRepo {
     @NotNull
     private final Logger logger;
 
-    private final boolean saveImmediately;
+    @NotNull
+    private final ConfigHolder configHolder;
 
     public LastAdTimeRepo(@NotNull File dir,
                           @NotNull Logger logger,
-                          boolean saveImmediately) {
+                          @NotNull ConfigHolder configHolder) {
         file = new File(dir, filename);
         configuration = YamlConfiguration.loadConfiguration(file);
 
         this.logger = logger;
-        this.saveImmediately = saveImmediately;
+        this.configHolder = configHolder;
     }
 
-    public void setLastAdTime(@NotNull String username,
+    public void setLastAdTime(@NotNull String playerName,
                               @NotNull Long time) {
-        configuration.set(username, time);
+        configuration.set(playerName, time);
 
-        if (saveImmediately) {
+        if (configHolder.getBoolean(ConfigKeys.adSaveFileImmediately)) {
             saveData();
         }
     }
 
     @NotNull
-    public Long getLastAdTime(@NotNull String username) {
-        return configuration.getLong(username, 0L);
+    public Long getLastAdTime(@NotNull String playerName) {
+        return configuration.getLong(playerName, 0L);
     }
 
     public void saveData() {

@@ -10,7 +10,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.text.SimpleDateFormat;
+import java.util.concurrent.TimeUnit;
+
 public class AdCommandExecutor implements CommandExecutor {
+
+    private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss");
 
     @NotNull
     private final ConfigHolder configHolder;
@@ -30,14 +35,32 @@ public class AdCommandExecutor implements CommandExecutor {
                              @NotNull String label,
                              @NotNull String[] args) {
         if (sender instanceof Player) {
-            var message = String.join(" ", args);
-            var prefix = configHolder.getString(ConfigKeys.adPrefix);
-            var postfix = configHolder.getString(ConfigKeys.adPostfix);
-            var formattedMessage = String.format("%s%s%s", prefix, message, postfix);
-            Bukkit.getServer().broadcastMessage(formattedMessage);
+            var playerName = sender.getName();
+
+            var time = System.currentTimeMillis();
+            var lastTimestamp = lastAdTimeRepo.getLastAdTime(playerName);
+            var timeDifference = time - lastTimestamp;
+            long threshold = TimeUnit.SECONDS.toMillis(configHolder.getLong(ConfigKeys.adThresholdPerPlayer));
+
+            if (timeDifference > threshold) {
+                var message = String.join(" ", args);
+                postUserAd(message);
+                lastAdTimeRepo.setLastAdTime(playerName, time);
+            } else {
+                var timeLabel = simpleDateFormat.format(threshold - timeDifference);
+                var message = configHolder.getString(ConfigKeys.Resources.waitToUseCommand).formatted(timeLabel);
+                sender.sendMessage(message);
+            }
         } else {
             sender.sendMessage(configHolder.getString(ConfigKeys.Resources.commandOnlyForPlayers));
         }
         return true;
+    }
+
+    private void postUserAd(String message) {
+        var prefix = configHolder.getString(ConfigKeys.adPrefix);
+        var postfix = configHolder.getString(ConfigKeys.adPostfix);
+        var formattedMessage = String.format("%s%s%s", prefix, message, postfix);
+        Bukkit.getServer().broadcastMessage(formattedMessage);
     }
 }

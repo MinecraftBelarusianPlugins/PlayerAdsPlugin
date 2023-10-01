@@ -9,4 +9,8 @@ public interface ConfigHolder {
 
     @NotNull
     public String getString(String key, String def);
+
+    public long getLong(String key);
+
+    public boolean getBoolean(String key);
 }
