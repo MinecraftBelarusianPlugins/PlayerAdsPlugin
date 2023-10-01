@@ -9,3 +9,4 @@ commands:
     usage: /ad
     default: true
     permission: player.ads
+    aliases: [фв, рэклама]
