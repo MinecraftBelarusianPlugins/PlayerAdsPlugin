@@ -1,13 +1,24 @@
-# ads display settings
+# [VIEW]
+# the prefix that will be added to the message
 ad-prefix: "***** "
+
+# the postfix that will be added to the message
 ad-postfix: " *****"
 
+# make it an empty string if not needed
+ad-player-signature-format: "(%s)"
+
+# [LOGIC]
 # sets the time threshold at which players can write ad messages
 # specified in seconds
 ad-threshold-per-player: 1800
+
+# The flag indicates whether the user's timestamps should be saved immediately.
+# Default is false, timestamps are stored in runtime, and
+# they are saved to a file when the plugin or server is turned off.
 ad-threshold-save-file-immediately: false
 
-# localizable resources
+# [MESSAGES]
 resources:
   command-only-for-players: "Гэтая каманда толькі для гульцоў"
   wait-to-use-command: "Вы нядаўна ўжо карысталіся гэтай камандай. Пачакайце яшчэ %s."
