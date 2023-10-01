@@ -3,6 +3,8 @@ package by.siarhiejbahdaniec.playeradsplugin.command;
 import by.siarhiejbahdaniec.playeradsplugin.config.ConfigHolder;
 import by.siarhiejbahdaniec.playeradsplugin.config.ConfigKeys;
 import by.siarhiejbahdaniec.playeradsplugin.repo.LastAdTimeRepo;
+import by.siarhiejbahdaniec.playeradsplugin.utils.StringUtils;
+import net.luckperms.api.LuckPerms;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -35,7 +37,7 @@ public class AdCommandExecutor implements CommandExecutor {
                              @NotNull String label,
                              @NotNull String[] args) {
         if (sender instanceof Player) {
-            var playerName = sender.getName();
+            var playerName = obtainPlayerName((Player) sender);
 
             var time = System.currentTimeMillis();
             var lastTimestamp = lastAdTimeRepo.getLastAdTime(playerName);
@@ -70,6 +72,20 @@ public class AdCommandExecutor implements CommandExecutor {
             sender.sendMessage(configHolder.getString(ConfigKeys.Resources.commandOnlyForPlayers));
         }
         return true;
+    }
+
+    private String obtainPlayerName(Player player) {
+        var playerName = player.getName();
+        var pluginManager = Bukkit.getServer().getPluginManager();
+        if (pluginManager.isPluginEnabled("LuckPerms")) {
+            var provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
+            if (provider != null) {
+                var api = provider.getProvider();
+                var metaData = api.getPlayerAdapter(Player.class).getMetaData(player);
+                return StringUtils.getOrEmpty(metaData.getPrefix()) + playerName + StringUtils.getOrEmpty(metaData.getSuffix());
+            }
+        }
+        return playerName;
     }
 
     private void postUserAd(String message, String playerName) {
