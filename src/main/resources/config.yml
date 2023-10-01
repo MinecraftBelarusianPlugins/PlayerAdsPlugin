@@ -23,8 +23,13 @@ ad-threshold-save-file-immediately: false
 # If equal to the negative number (e.g. -1), then there are no size restrictions.
 ad-max-message-length: 255
 
+# Minimum message length from the user (without prefix, postfix and suffix).
+# If equal to the negative number (e.g. -1), then there are no size restrictions.
+ad-min-message-length: 25
+
 # [MESSAGES]
 resources:
   command-only-for-players: "§cГэтая каманда толькі для гульцоў"
   wait-to-use-command: "§cВы нядаўна ўжо карысталіся гэтай камандай. Пачакайце яшчэ %s."
   message-too-large: "§cПаведамленне занадта вялікае. Максімальны памер паведамлення: %d знакаў."
+  message-too-small: "§cПаведамленне занадта маленькае. Мінімальны памер паведамлення: %d знакаў."
