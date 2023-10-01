@@ -1,13 +1,13 @@
 # [VIEW]
 # The prefix that will be added to the message
-ad-prefix: "***** "
+ad-prefix: '&6&l[Рэклама]\n'
 
 # The postfix that will be added to the message
-ad-postfix: " *****"
+ad-postfix: '\n&6&l[Рэклама]'
 
 # Player signature format. It will right before the postfix.
 # Make it an empty string if not needed.
-ad-player-signature-format: " (%s)"
+ad-player-signature-format: '\nАдправіў: %s'
 
 # If true, then if there are "\n" symbols inside the message,
 # as well as prefix, postfix and signature,
@@ -38,6 +38,6 @@ ad-use-luck-perms-placeholders: true
 # [MESSAGES]
 resources:
   command-only-for-players: "&cГэтая каманда толькі для гульцоў"
-  wait-to-use-command: "&cВы нядаўна ўжо карысталіся гэтай камандай. Пачакайце яшчэ %s."
+  wait-to-use-command: "&cАдпраўка рэкламы недаступна. Пачакайце яшчэ %s."
   message-too-large: "&cПаведамленне занадта вялікае. Максімальны памер паведамлення: %d знакаў."
   message-too-small: "&cПаведамленне занадта маленькае. Мінімальны памер паведамлення: %d знакаў."
