@@ -10,9 +10,15 @@ public final class PlayerAdsPlugin extends JavaPlugin implements ConfigHolder {
 
     @Override
     public void onEnable() {
-        saveDefaultConfig();
+        setupConfig();
+
         Objects.requireNonNull(getCommand("ad"))
                 .setExecutor(new AdCommandExecutor(this));
+    }
+
+    private void setupConfig() {
+        saveDefaultConfig();
+        getConfig().options().copyDefaults(true);
     }
 
     @NotNull

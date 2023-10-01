@@ -32,5 +32,4 @@ public class AdCommandExecutor implements CommandExecutor {
         }
         return true;
     }
-
 }
