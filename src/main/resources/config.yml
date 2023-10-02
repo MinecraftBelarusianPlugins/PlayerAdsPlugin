@@ -52,3 +52,4 @@ resources:
 
   invalid-command: "&cНяправільнае выкарыстанне каманды"
   invalid-command-reset: "&9Прыклад выкарыстання: /ad reset <PlayerName1> <PlayerName2> ... <PlayerNameN>"
+  invalid-command-ad: "&9Прыклад выкарыстання: /%s <Тэкст>"

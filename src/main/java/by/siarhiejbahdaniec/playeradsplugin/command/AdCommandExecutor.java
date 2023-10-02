@@ -45,6 +45,16 @@ public class AdCommandExecutor implements CommandExecutor {
                              @NotNull Command command,
                              @NotNull String label,
                              @NotNull String[] args) {
+        if (args.length == 0) {
+            sender.sendMessage(
+                    ColorUtils.format(
+                            configHolder.getString(ConfigKeys.Resources.invalidCommand)));
+            sender.sendMessage(
+                    ColorUtils.format(
+                            configHolder.getString(ConfigKeys.Resources.invalidCommandAd)
+                                    .formatted(label)));
+            return true;
+        }
         if (handleReload(sender, args)) {
             return true;
         }
