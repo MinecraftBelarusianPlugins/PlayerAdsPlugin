@@ -146,17 +146,21 @@ public class AdCommandExecutor implements CommandExecutor {
                 sender.sendMessage(OPERATOR_MESSAGE_PREFIX +
                         ColorUtils.format(configHolder.getString(ConfigKeys.Resources.invalidCommandReset)));
             } else {
-                var playerName = args[1];
-                var player = Bukkit.getServer().getPlayer(playerName);
-                if (player != null) {
-                    lastAdTimeRepo.setLastAdTime(playerName, 0L);
-                    sender.sendMessage(OPERATOR_MESSAGE_PREFIX +
-                            ColorUtils.format(
-                                    configHolder.getString(ConfigKeys.Resources.playerTimerReset)
-                                            .formatted(playerName)));
-                } else {
-                    sender.sendMessage(OPERATOR_MESSAGE_PREFIX +
-                            ColorUtils.format(configHolder.getString(ConfigKeys.Resources.playerNotFound)));
+                for (int i = 1; i < args.length; i++) {
+                    var playerName = args[i];
+                    var player = Bukkit.getServer().getPlayer(playerName);
+                    if (player != null) {
+                        lastAdTimeRepo.setLastAdTime(playerName, 0L);
+                        sender.sendMessage(OPERATOR_MESSAGE_PREFIX +
+                                ColorUtils.format(
+                                        configHolder.getString(ConfigKeys.Resources.playerTimerReset)
+                                                .formatted(playerName)));
+                    } else {
+                        sender.sendMessage(OPERATOR_MESSAGE_PREFIX +
+                                ColorUtils.format(
+                                        configHolder.getString(ConfigKeys.Resources.playerNotFound)
+                                                .formatted(playerName)));
+                    }
                 }
             }
             return true;

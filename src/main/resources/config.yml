@@ -47,7 +47,7 @@ resources:
   message-too-small: "&cПаведамленне занадта маленькае. Мінімальны памер паведамлення: %d знакаў."
 
   config-reloaded: "&2Канфіг перазагружаны"
-  player-not-found: "&cНяма такога гульца!"
+  player-not-found: "&cГулец з нікам %s не знойдзены"
   player-timer-reset: "&2Таймер для гульца %s быў скасаваны"
 
   invalid-command: "&cНяправільнае выкарыстанне каманды"
