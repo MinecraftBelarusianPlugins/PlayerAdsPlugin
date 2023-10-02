@@ -19,10 +19,24 @@ public class TimeFormatter {
         var minutes = millis / (60 * 1000) - hours * 60;
         var seconds = millis / 1000 - hours * 60 * 60 - minutes * 60;
 
-        return String.join(" ", formatTimeUnit(ConfigKeys.Resources.hoursPlurals, hours),
-                        formatTimeUnit(ConfigKeys.Resources.minutesPlurals, minutes),
-                        formatTimeUnit(ConfigKeys.Resources.secondsPlurals, seconds))
-                .trim();
+        try {
+            return String.join(" ", formatTimeUnit(ConfigKeys.Resources.hoursPlurals, hours),
+                            formatTimeUnit(ConfigKeys.Resources.minutesPlurals, minutes),
+                            formatTimeUnit(ConfigKeys.Resources.secondsPlurals, seconds))
+                    .trim();
+        } catch (Throwable throwable) {
+            var builder = new StringBuilder();
+            if (hours > 0) {
+                builder.append("%02d:".formatted(hours));
+            }
+            if (hours > 0 || minutes > 0) {
+                builder.append("%02d:".formatted(minutes));
+            }
+            if (hours > 0 || minutes > 0 || seconds > 0) {
+                builder.append("%02d".formatted(seconds));
+            }
+            return builder.toString();
+        }
     }
 
     private String formatTimeUnit(String pluralKey, long value) {

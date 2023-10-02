@@ -45,6 +45,16 @@ public class AdCommandExecutor implements CommandExecutor {
                              @NotNull Command command,
                              @NotNull String label,
                              @NotNull String[] args) {
+        if (args.length == 0) {
+            sender.sendMessage(
+                    ColorUtils.format(
+                            configHolder.getString(ConfigKeys.Resources.invalidCommand)));
+            sender.sendMessage(
+                    ColorUtils.format(
+                            configHolder.getString(ConfigKeys.Resources.invalidCommandAd)
+                                    .formatted(label)));
+            return true;
+        }
         if (handleReload(sender, args)) {
             return true;
         }
@@ -60,7 +70,7 @@ public class AdCommandExecutor implements CommandExecutor {
             var timeDifference = time - lastTimestamp;
             long threshold = TimeUnit.SECONDS.toMillis(configHolder.getInt(ConfigKeys.adThresholdPerPlayer));
 
-            if (timeDifference > threshold) {
+            if (timeDifference >= threshold) {
                 var message = String.join(" ", args);
 
                 var maxLength = configHolder.getInt(ConfigKeys.adMaxMessageLength);

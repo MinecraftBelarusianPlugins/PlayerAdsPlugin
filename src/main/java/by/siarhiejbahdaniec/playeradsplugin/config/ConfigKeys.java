@@ -31,5 +31,6 @@ public class ConfigKeys {
 
         public static final String invalidCommand = _prefix + "invalid-command";
         public static final String invalidCommandReset = _prefix + "invalid-command-reset";
+        public static final String invalidCommandAd = _prefix + "invalid-command-ad";
     }
 }
