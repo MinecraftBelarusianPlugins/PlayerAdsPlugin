@@ -2,6 +2,7 @@ package by.siarhiejbahdaniec.playeradsplugin.command;
 
 import by.siarhiejbahdaniec.playeradsplugin.config.ConfigHolder;
 import by.siarhiejbahdaniec.playeradsplugin.config.ConfigKeys;
+import by.siarhiejbahdaniec.playeradsplugin.format.TimeFormatter;
 import by.siarhiejbahdaniec.playeradsplugin.repo.LastAdTimeRepo;
 import by.siarhiejbahdaniec.playeradsplugin.utils.ColorUtils;
 import by.siarhiejbahdaniec.playeradsplugin.utils.StringUtils;
@@ -14,12 +15,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.text.SimpleDateFormat;
 import java.util.concurrent.TimeUnit;
 
 public class AdCommandExecutor implements CommandExecutor {
-
-    private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss");
 
     @NotNull
     private final ConfigHolder configHolder;
@@ -27,10 +25,15 @@ public class AdCommandExecutor implements CommandExecutor {
     @NotNull
     private final LastAdTimeRepo lastAdTimeRepo;
 
+    @NotNull
+    private final TimeFormatter timeFormatter;
+
     public AdCommandExecutor(@NotNull ConfigHolder configHolder,
-                             @NotNull LastAdTimeRepo lastAdTimeRepo) {
+                             @NotNull LastAdTimeRepo lastAdTimeRepo,
+                             @NotNull TimeFormatter timeFormatter) {
         this.configHolder = configHolder;
         this.lastAdTimeRepo = lastAdTimeRepo;
+        this.timeFormatter = timeFormatter;
     }
 
     @Override
@@ -66,7 +69,7 @@ public class AdCommandExecutor implements CommandExecutor {
                     lastAdTimeRepo.setLastAdTime(playerName, time);
                 }
             } else {
-                var timeLabel = simpleDateFormat.format(threshold - timeDifference);
+                var timeLabel = timeFormatter.format(threshold - timeDifference);
                 var message = configHolder.getString(ConfigKeys.Resources.waitToUseCommand).formatted(timeLabel);
                 sender.sendMessage(ColorUtils.format(message));
             }

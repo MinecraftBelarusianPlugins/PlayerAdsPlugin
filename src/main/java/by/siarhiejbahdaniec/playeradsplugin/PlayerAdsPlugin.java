@@ -2,11 +2,13 @@ package by.siarhiejbahdaniec.playeradsplugin;
 
 import by.siarhiejbahdaniec.playeradsplugin.command.AdCommandExecutor;
 import by.siarhiejbahdaniec.playeradsplugin.config.ConfigHolder;
+import by.siarhiejbahdaniec.playeradsplugin.format.TimeFormatter;
 import by.siarhiejbahdaniec.playeradsplugin.repo.LastAdTimeRepo;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Objects;
 
 public final class PlayerAdsPlugin extends JavaPlugin implements ConfigHolder {
@@ -20,7 +22,7 @@ public final class PlayerAdsPlugin extends JavaPlugin implements ConfigHolder {
 
         lastAdTimeRepo = new LastAdTimeRepo(getDataFolder(), getLogger(), this);
 
-        var executor = new AdCommandExecutor(this, lastAdTimeRepo);
+        var executor = new AdCommandExecutor(this, lastAdTimeRepo, new TimeFormatter(this));
         Objects.requireNonNull(getCommand("ad")).setExecutor(executor);
     }
 
@@ -59,5 +61,10 @@ public final class PlayerAdsPlugin extends JavaPlugin implements ConfigHolder {
     @Override
     public boolean getBoolean(String key) {
         return getConfig().getBoolean(key);
+    }
+
+    @Override
+    public @NotNull List<String> getStringList(String key) {
+        return getConfig().getStringList(key);
     }
 }
