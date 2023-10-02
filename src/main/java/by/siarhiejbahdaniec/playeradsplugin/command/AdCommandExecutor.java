@@ -44,6 +44,9 @@ public class AdCommandExecutor implements CommandExecutor {
         if (handleReload(sender, args)) {
             return true;
         }
+        if (handleReset(sender, args)) {
+            return true;
+        }
         if (sender instanceof Player) {
             var playerName = sender.getName();
             var decoratedPlayerName = obtainPlayerName((Player) sender);
@@ -125,6 +128,19 @@ public class AdCommandExecutor implements CommandExecutor {
                     ChatColor.BOLD.toString() +
                     "[PlayerAdsPlugin] " +
                     configHolder.getString(ConfigKeys.Resources.configReloaded));
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean handleReset(@NotNull CommandSender sender,
+                                 @NotNull String[] args) {
+
+        if (sender.isOp() && args[0].equals("reset")) {
+            var playerName = args[1];
+            lastAdTimeRepo.setLastAdTime(playerName, 0L);
+            sender.sendMessage("Player's timer was reset!");
             return true;
         }
 
