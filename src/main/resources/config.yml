@@ -37,6 +37,10 @@ ad-use-luck-perms-placeholders: true
 
 # [MESSAGES]
 resources:
+  hours-plurals: ["гадзіну", "гадзіны", "гадзін"]
+  minutes-plurals: ["хвіліну", "хвіліны", "хвілін"]
+  seconds-plurals: ["секунду", "секунды", "секунд"]
+
   command-only-for-players: "&cГэтая каманда толькі для гульцоў"
   wait-to-use-command: "&cАдпраўка рэкламы недаступна. Пачакайце яшчэ %s."
   message-too-large: "&cПаведамленне занадта вялікае. Максімальны памер паведамлення: %d знакаў."

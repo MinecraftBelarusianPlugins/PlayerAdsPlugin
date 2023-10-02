@@ -15,6 +15,11 @@ public class ConfigKeys {
 
     public static class Resources {
         private static final String _prefix = "resources.";
+
+        public static final String hoursPlurals = _prefix + "hours-plurals";
+        public static final String minutesPlurals = _prefix + "minutes-plurals";
+        public static final String secondsPlurals = _prefix + "seconds-plurals";
+
         public static final String commandOnlyForPlayers = _prefix + "command-only-for-players";
         public static final String waitToUseCommand = _prefix + "wait-to-use-command";
         public static final String messageTooLarge = _prefix + "message-too-large";
