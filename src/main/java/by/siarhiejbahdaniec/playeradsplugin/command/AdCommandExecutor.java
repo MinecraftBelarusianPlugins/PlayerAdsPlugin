@@ -129,7 +129,7 @@ public class AdCommandExecutor implements CommandExecutor {
         if (sender.isOp() && args[0].equals("reload")) {
             configHolder.reloadConfigFromDisk();
             sender.sendMessage(OPERATOR_MESSAGE_PREFIX +
-                    configHolder.getString(ConfigKeys.Resources.configReloaded));
+                    ColorUtils.format(configHolder.getString(ConfigKeys.Resources.configReloaded)));
             return true;
         }
 
@@ -140,16 +140,24 @@ public class AdCommandExecutor implements CommandExecutor {
                                  @NotNull String[] args) {
 
         if (sender.isOp() && args[0].equals("reset")) {
-            var playerName = args[1];
-            var player = Bukkit.getServer().getPlayer(playerName);
-            if (player != null) {
-                lastAdTimeRepo.setLastAdTime(playerName, 0L);
+            if (args.length < 2) {
                 sender.sendMessage(OPERATOR_MESSAGE_PREFIX +
-                        configHolder.getString(ConfigKeys.Resources.playerTimerReset)
-                                .formatted(playerName));
+                        ColorUtils.format(configHolder.getString(ConfigKeys.Resources.invalidCommand)));
+                sender.sendMessage(OPERATOR_MESSAGE_PREFIX +
+                        ColorUtils.format(configHolder.getString(ConfigKeys.Resources.invalidCommandReset)));
             } else {
-                sender.sendMessage(OPERATOR_MESSAGE_PREFIX +
-                        configHolder.getString(ConfigKeys.Resources.playerNotFound));
+                var playerName = args[1];
+                var player = Bukkit.getServer().getPlayer(playerName);
+                if (player != null) {
+                    lastAdTimeRepo.setLastAdTime(playerName, 0L);
+                    sender.sendMessage(OPERATOR_MESSAGE_PREFIX +
+                            ColorUtils.format(
+                                    configHolder.getString(ConfigKeys.Resources.playerTimerReset)
+                                            .formatted(playerName)));
+                } else {
+                    sender.sendMessage(OPERATOR_MESSAGE_PREFIX +
+                            ColorUtils.format(configHolder.getString(ConfigKeys.Resources.playerNotFound)));
+                }
             }
             return true;
         }
