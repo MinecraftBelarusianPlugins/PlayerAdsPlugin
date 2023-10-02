@@ -45,7 +45,8 @@ public class AdCommandExecutor implements CommandExecutor {
             return true;
         }
         if (sender instanceof Player) {
-            var playerName = obtainPlayerName((Player) sender);
+            var playerName = sender.getName();
+            var decoratedPlayerName = obtainPlayerName((Player) sender);
 
             var time = System.currentTimeMillis();
             var lastTimestamp = lastAdTimeRepo.getLastAdTime(playerName);
@@ -68,7 +69,7 @@ public class AdCommandExecutor implements CommandExecutor {
                             .formatted(minLength);
                     sender.sendMessage(ColorUtils.format(error));
                 } else {
-                    postUserAd(message, playerName);
+                    postUserAd(message, decoratedPlayerName);
                     lastAdTimeRepo.setLastAdTime(playerName, time);
                 }
             } else {
