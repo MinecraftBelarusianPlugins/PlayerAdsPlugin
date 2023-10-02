@@ -45,4 +45,10 @@ resources:
   wait-to-use-command: "&cАдпраўка рэкламы недаступна. Пачакайце яшчэ %s."
   message-too-large: "&cПаведамленне занадта вялікае. Максімальны памер паведамлення: %d знакаў."
   message-too-small: "&cПаведамленне занадта маленькае. Мінімальны памер паведамлення: %d знакаў."
-  config-reloaded: "Канфіг перазагружаны"
+
+  config-reloaded: "&2Канфіг перазагружаны"
+  player-not-found: "&cГулец з нікам %s не знойдзены"
+  player-timer-reset: "&2Таймер для гульца %s быў скасаваны"
+
+  invalid-command: "&cНяправільнае выкарыстанне каманды"
+  invalid-command-reset: "&9Прыклад выкарыстання: /ad reset <PlayerName1> <PlayerName2> ... <PlayerNameN>"

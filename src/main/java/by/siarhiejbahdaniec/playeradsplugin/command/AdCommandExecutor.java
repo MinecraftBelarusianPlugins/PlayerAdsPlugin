@@ -28,6 +28,10 @@ public class AdCommandExecutor implements CommandExecutor {
     @NotNull
     private final TimeFormatter timeFormatter;
 
+    private final static String OPERATOR_MESSAGE_PREFIX = ChatColor.GOLD +
+            ChatColor.ITALIC.toString() +
+            "[PlayerAdsPlugin] ";
+
     public AdCommandExecutor(@NotNull ConfigHolder configHolder,
                              @NotNull LastAdTimeRepo lastAdTimeRepo,
                              @NotNull TimeFormatter timeFormatter) {
@@ -44,8 +48,12 @@ public class AdCommandExecutor implements CommandExecutor {
         if (handleReload(sender, args)) {
             return true;
         }
+        if (handleReset(sender, args)) {
+            return true;
+        }
         if (sender instanceof Player) {
-            var playerName = obtainPlayerName((Player) sender);
+            var playerName = sender.getName();
+            var decoratedPlayerName = obtainPlayerName((Player) sender);
 
             var time = System.currentTimeMillis();
             var lastTimestamp = lastAdTimeRepo.getLastAdTime(playerName);
@@ -68,7 +76,7 @@ public class AdCommandExecutor implements CommandExecutor {
                             .formatted(minLength);
                     sender.sendMessage(ColorUtils.format(error));
                 } else {
-                    postUserAd(message, playerName);
+                    postUserAd(message, decoratedPlayerName);
                     lastAdTimeRepo.setLastAdTime(playerName, time);
                 }
             } else {
@@ -120,10 +128,41 @@ public class AdCommandExecutor implements CommandExecutor {
 
         if (sender.isOp() && args[0].equals("reload")) {
             configHolder.reloadConfigFromDisk();
-            sender.sendMessage(ChatColor.GOLD +
-                    ChatColor.BOLD.toString() +
-                    "[PlayerAdsPlugin] " +
-                    configHolder.getString(ConfigKeys.Resources.configReloaded));
+            sender.sendMessage(OPERATOR_MESSAGE_PREFIX +
+                    ColorUtils.format(configHolder.getString(ConfigKeys.Resources.configReloaded)));
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean handleReset(@NotNull CommandSender sender,
+                                 @NotNull String[] args) {
+
+        if (sender.isOp() && args[0].equals("reset")) {
+            if (args.length < 2) {
+                sender.sendMessage(OPERATOR_MESSAGE_PREFIX +
+                        ColorUtils.format(configHolder.getString(ConfigKeys.Resources.invalidCommand)));
+                sender.sendMessage(OPERATOR_MESSAGE_PREFIX +
+                        ColorUtils.format(configHolder.getString(ConfigKeys.Resources.invalidCommandReset)));
+            } else {
+                for (int i = 1; i < args.length; i++) {
+                    var playerName = args[i];
+                    var player = Bukkit.getServer().getPlayer(playerName);
+                    if (player != null) {
+                        lastAdTimeRepo.setLastAdTime(playerName, 0L);
+                        sender.sendMessage(OPERATOR_MESSAGE_PREFIX +
+                                ColorUtils.format(
+                                        configHolder.getString(ConfigKeys.Resources.playerTimerReset)
+                                                .formatted(playerName)));
+                    } else {
+                        sender.sendMessage(OPERATOR_MESSAGE_PREFIX +
+                                ColorUtils.format(
+                                        configHolder.getString(ConfigKeys.Resources.playerNotFound)
+                                                .formatted(playerName)));
+                    }
+                }
+            }
             return true;
         }
 

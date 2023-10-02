@@ -24,6 +24,12 @@ public class ConfigKeys {
         public static final String waitToUseCommand = _prefix + "wait-to-use-command";
         public static final String messageTooLarge = _prefix + "message-too-large";
         public static final String messageTooSmall = _prefix + "message-too-small";
+
         public static final String configReloaded = _prefix + "config-reloaded";
+        public static final String playerNotFound = _prefix + "player-not-found";
+        public static final String playerTimerReset = _prefix + "player-timer-reset";
+
+        public static final String invalidCommand = _prefix + "invalid-command";
+        public static final String invalidCommandReset = _prefix + "invalid-command-reset";
     }
 }
