@@ -60,7 +60,7 @@ public class AdCommandExecutor implements CommandExecutor {
             var timeDifference = time - lastTimestamp;
             long threshold = TimeUnit.SECONDS.toMillis(configHolder.getInt(ConfigKeys.adThresholdPerPlayer));
 
-            if (timeDifference > threshold) {
+            if (timeDifference >= threshold) {
                 var message = String.join(" ", args);
 
                 var maxLength = configHolder.getInt(ConfigKeys.adMaxMessageLength);
