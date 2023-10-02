@@ -18,4 +18,6 @@ public interface ConfigHolder {
     int getInt(String key);
 
     boolean getBoolean(String key);
+
+    void reloadConfigFromDisk();
 }

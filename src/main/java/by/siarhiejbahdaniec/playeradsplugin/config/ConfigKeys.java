@@ -24,5 +24,6 @@ public class ConfigKeys {
         public static final String waitToUseCommand = _prefix + "wait-to-use-command";
         public static final String messageTooLarge = _prefix + "message-too-large";
         public static final String messageTooSmall = _prefix + "message-too-small";
+        public static final String configReloaded = _prefix + "config-reloaded";
     }
 }

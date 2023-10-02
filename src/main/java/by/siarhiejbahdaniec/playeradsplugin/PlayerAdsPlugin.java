@@ -67,4 +67,9 @@ public final class PlayerAdsPlugin extends JavaPlugin implements ConfigHolder {
     public @NotNull List<String> getStringList(String key) {
         return getConfig().getStringList(key);
     }
+
+    @Override
+    public void reloadConfigFromDisk() {
+        reloadConfig();
+    }
 }
