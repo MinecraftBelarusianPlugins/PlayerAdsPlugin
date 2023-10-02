@@ -41,6 +41,9 @@ public class AdCommandExecutor implements CommandExecutor {
                              @NotNull Command command,
                              @NotNull String label,
                              @NotNull String[] args) {
+        if (handleReload(sender, args)) {
+            return true;
+        }
         if (sender instanceof Player) {
             var playerName = obtainPlayerName((Player) sender);
 
@@ -104,11 +107,26 @@ public class AdCommandExecutor implements CommandExecutor {
         var formattedMessage = String.join(ChatColor.RESET.toString(), prefix, message, signature, postfix);
         var coloredMessage = (ColorUtils.format(formattedMessage));
         if (configHolder.getBoolean(ConfigKeys.adUseMultiLine)) {
-            for (var line: coloredMessage.split("\\\\n")) {
+            for (var line : coloredMessage.split("\\\\n")) {
                 Bukkit.getServer().broadcastMessage(line);
             }
         } else {
             Bukkit.getServer().broadcastMessage(coloredMessage);
         }
+    }
+
+    private boolean handleReload(@NotNull CommandSender sender,
+                                 @NotNull String[] args) {
+
+        if (sender.isOp() && args[0].equals("reload")) {
+            configHolder.reloadConfigFromDisk();
+            sender.sendMessage(ChatColor.GOLD +
+                    ChatColor.BOLD.toString() +
+                    "[PlayerAdsPlugin] " +
+                    configHolder.getString(ConfigKeys.Resources.configReloaded));
+            return true;
+        }
+
+        return false;
     }
 }
