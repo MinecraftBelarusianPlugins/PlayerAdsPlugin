@@ -15,7 +15,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Comparator;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class AdCommandExecutor implements CommandExecutor {
 
@@ -27,6 +31,8 @@ public class AdCommandExecutor implements CommandExecutor {
 
     @NotNull
     private final TimeFormatter timeFormatter;
+
+    private static final Pattern permissionPattern = Pattern.compile("player\\.ads\\.([0-9]*)");
 
     private final static String OPERATOR_MESSAGE_PREFIX = ChatColor.GOLD +
             ChatColor.ITALIC.toString() +
@@ -61,14 +67,19 @@ public class AdCommandExecutor implements CommandExecutor {
         if (handleReset(sender, args)) {
             return true;
         }
-        if (sender instanceof Player) {
+        if (sender instanceof Player player) {
             var playerName = sender.getName();
-            var decoratedPlayerName = obtainPlayerName((Player) sender);
+            var decoratedPlayerName = obtainPlayerName(player);
 
             var time = System.currentTimeMillis();
             var lastTimestamp = lastAdTimeRepo.getLastAdTime(playerName);
             var timeDifference = time - lastTimestamp;
-            long threshold = TimeUnit.SECONDS.toMillis(configHolder.getInt(ConfigKeys.adThresholdPerPlayer));
+            long threshold = obtainPlayerThreshold(player);
+
+            checkAndLog(
+                    Level.INFO,
+                    "%s's threshold in millis= %d".formatted(playerName, threshold)
+            );
 
             if (timeDifference >= threshold) {
                 var message = String.join(" ", args);
@@ -116,6 +127,17 @@ public class AdCommandExecutor implements CommandExecutor {
             }
         }
         return playerName;
+    }
+
+    private long obtainPlayerThreshold(Player player) {
+        var threshold = player.getEffectivePermissions()
+                .stream()
+                .map(info -> permissionPattern.matcher(info.getPermission()))
+                .filter(Matcher::matches)
+                .map(matcher -> Integer.parseInt(matcher.group(1)))
+                .min(Comparator.naturalOrder())
+                .orElseGet(() -> configHolder.getInt(ConfigKeys.adThresholdPerPlayer));
+        return TimeUnit.SECONDS.toMillis(threshold);
     }
 
     private void postUserAd(String message, String playerName) {
@@ -177,5 +199,11 @@ public class AdCommandExecutor implements CommandExecutor {
         }
 
         return false;
+    }
+
+    private void checkAndLog(Level level, String message) {
+        if (configHolder.getBoolean(ConfigKeys.logging)) {
+            Bukkit.getLogger().log(level, message);
+        }
     }
 }

@@ -13,6 +13,8 @@ public class ConfigKeys {
     public static final String adMinMessageLength = "ad-min-message-length";
     public static final String adUseLuckPermsPlaceholders = "ad-use-luck-perms-placeholders";
 
+    public static final String logging = "logging";
+
     public static class Resources {
         private static final String _prefix = "resources.";
 
