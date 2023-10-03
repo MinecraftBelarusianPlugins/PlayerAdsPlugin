@@ -17,6 +17,7 @@ ad-use-multi-line: true
 # [LOGIC]
 # Sets the time threshold at which players can write ad messages.
 # Specified in seconds.
+# This will be the fallback value if you use threshold setting via player.ads.<threshold>
 ad-threshold-per-player: 1800
 
 # The flag indicates whether the user's timestamps should be saved immediately.
@@ -34,6 +35,9 @@ ad-min-message-length: 25
 
 # Specifies whether prefixes and suffixes from LuckPerms should be used in player's signature
 ad-use-luck-perms-placeholders: true
+
+# [DEBUG]
+logging: false
 
 # [MESSAGES]
 resources:

@@ -17,6 +17,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Comparator;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -74,6 +75,11 @@ public class AdCommandExecutor implements CommandExecutor {
             var lastTimestamp = lastAdTimeRepo.getLastAdTime(playerName);
             var timeDifference = time - lastTimestamp;
             long threshold = obtainPlayerThreshold(player);
+
+            checkAndLog(
+                    Level.INFO,
+                    "%s's threshold = %d".formatted(playerName, threshold)
+            );
 
             if (timeDifference >= threshold) {
                 var message = String.join(" ", args);
@@ -192,5 +198,11 @@ public class AdCommandExecutor implements CommandExecutor {
         }
 
         return false;
+    }
+
+    private void checkAndLog(Level level, String message) {
+        if (configHolder.getBoolean(ConfigKeys.logging)) {
+            Bukkit.getLogger().log(level, message);
+        }
     }
 }
