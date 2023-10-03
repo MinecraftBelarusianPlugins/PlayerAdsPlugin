@@ -78,7 +78,7 @@ public class AdCommandExecutor implements CommandExecutor {
 
             checkAndLog(
                     Level.INFO,
-                    "%s's threshold = %d".formatted(playerName, threshold)
+                    "%s's threshold in millis= %d".formatted(playerName, threshold)
             );
 
             if (timeDifference >= threshold) {
@@ -134,7 +134,8 @@ public class AdCommandExecutor implements CommandExecutor {
                 .stream()
                 .map(info -> permissionPattern.matcher(info.getPermission()))
                 .filter(Matcher::matches)
-                .map(matcher -> Integer.parseInt(matcher.group(0))).min(Comparator.naturalOrder())
+                .map(matcher -> Integer.parseInt(matcher.group(1)))
+                .min(Comparator.naturalOrder())
                 .orElseGet(() -> configHolder.getInt(ConfigKeys.adThresholdPerPlayer));
         return TimeUnit.SECONDS.toMillis(threshold);
     }
